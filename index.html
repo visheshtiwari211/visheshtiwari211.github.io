@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishesh Tiwari — Android & KMP Engineer</title>
+    <meta name="description" content="Android Engineer specializing in Kotlin, Jetpack Compose, and Kotlin Multiplatform. Open to remote opportunities.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060A14;
+            --surface: #0C1018;
+            --card: #111722;
+            --border: #1E2338;
+            --primary: #A594E8;
+            --primary-dim: #7B6DB8;
+            --secondary: #58D4B8;
+            --tertiary: #D4A24E;
+            --text: #E4E4EE;
+            --dim: #6E7590;
+            --subtle: #4A5168;
+            --income: #3D9E6E;
+            --career: #5A9FD4;
+            --personal: #D4944A;
+        }
+
+        .light {
+            --bg: #F6F7FB;
+            --surface: #FFFFFF;
+            --card: #FFFFFF;
+            --border: #E5E7EB;
+            --primary: #6B5CE7;
+            --primary-dim: #8B7FD0;
+            --secondary: #2BA88A;
+            --tertiary: #C48B2C;
+            --text: #1A1C24;
+            --dim: #6B7280;
+            --subtle: #9CA3AF;
+            --income: #2E8B57;
+            --career: #3B7DD8;
+            --personal: #D4862A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover { border-color: var(--primary); }
+
+        /* Layout */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 120px 0 80px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.06;
+            pointer-events: none;
+        }
+
+        .hero-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--dim);
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #0A0E18;
+        }
+        .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+        .btn-outline {
+            border: 1px solid var(--border);
+            color: var(--text);
+            background: transparent;
+        }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Status badge */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            background: var(--income);
+            color: white;
+            margin-bottom: 24px;
+        }
+        .status .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .skill-card {
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            transition: border-color 0.2s;
+        }
+        .skill-card:hover { border-color: var(--primary); }
+
+        .skill-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-card .accent {
+            width: 3px;
+            height: 16px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .skill-card p {
+            font-size: 12px;
+            color: var(--dim);
+            line-height: 1.6;
+        }
+
+        /* Projects */
+        .project-card {
+            padding: 28px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+        .project-card:hover { border-color: var(--primary); }
+
+        .project-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .project-meta {
+            font-size: 12px;
+            color: var(--dim);
+            margin-bottom: 12px;
+        }
+
+        .project-card p {
+            font-size: 14px;
+            color: var(--dim);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .tech-tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--surface);
+            color: var(--dim);
+            border: 1px solid var(--border);
+        }
+
+        /* Experience */
+        .exp-item {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .exp-item:last-child { border-bottom: none; }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .exp-role {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .exp-date {
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--subtle);
+        }
+
+        .exp-company {
+            font-size: 13px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .exp-desc {
+            font-size: 13px;
+            color: var(--dim);
+            line-height: 1.7;
+        }
+
+        .exp-desc li {
+            margin-bottom: 6px;
+            list-style: none;
+            padding-left: 16px;
+            position: relative;
+        }
+        .exp-desc li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.5;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .contact-card {
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+        .contact-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+
+        .contact-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--subtle);
+            margin-bottom: 6px;
+        }
+
+        .contact-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 12px;
+            color: var(--subtle);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 32px; }
+            .skills-grid, .contact-grid { grid-template-columns: 1fr; }
+            .hero { padding: 80px 0 60px; }
+            .exp-header { flex-direction: column; gap: 4px; }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
+        <span id="themeIcon">&#9790;</span>
+    </button>
+
+    <div class="container">
+        <!-- Hero -->
+        <header class="hero">
+            <div class="fade-in">
+                <div class="status">
+                    <span class="dot"></span>
+                    Available for remote work
+                </div>
+            </div>
+            <div class="hero-label fade-in delay-1">ANDROID & KMP ENGINEER</div>
+            <h1 class="fade-in delay-1">
+                Hi, I'm <span class="gradient">Vishesh Tiwari</span>
+            </h1>
+            <p class="hero-subtitle fade-in delay-2">
+                I build cross-platform mobile apps with Kotlin, Jetpack Compose, and Kotlin Multiplatform. Passionate about clean architecture and beautiful UI.
+            </p>
+            <div class="hero-links fade-in delay-3">
+                <a href="https://github.com/visheshtiwari211" class="btn-primary" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/YOUR_LINKEDIN" class="btn-outline" target="_blank">LinkedIn</a>
+                <a href="mailto:YOUR_EMAIL" class="btn-outline">Contact</a>
+                <a href="https://arc.dev/@YOUR_ARC" class="btn-outline" target="_blank">Arc.dev</a>
+            </div>
+        </header>
+
+        <!-- Skills -->
+        <section>
+            <div class="section-label">EXPERTISE</div>
+            <div class="skills-grid">
+                <div class="skill-card fade-in">
+                    <h3><span class="accent" style="background: var(--career)"></span> Android Development</h3>
+                    <p>Production apps with Kotlin, Jetpack Compose, Material Design 3, Coroutines & Flow, MVVM/Clean Architecture</p>
+                </div>
+                <div class="skill-card fade-in delay-1">
+                    <h3><span class="accent" style="background: var(--primary)"></span> Kotlin Multiplatform</h3>
+                    <p>Cross-platform apps targeting Android, iOS, and Desktop. Shared business logic, expect/actual, Compose Multiplatform</p>
+                </div>
+                <div class="skill-card fade-in delay-2">
+                    <h3><span class="accent" style="background: var(--income)"></span> Architecture & Patterns</h3>
+                    <p>Clean Architecture, MVVM, MVI, Repository Pattern, Dependency Injection, Unit Testing, CI/CD</p>
+                </div>
+                <div class="skill-card fade-in delay-3">
+                    <h3><span class="accent" style="background: var(--tertiary)"></span> Tools & Ecosystem</h3>
+                    <p>Android Studio, Gradle, Git, GitHub Actions, Ktor, kotlinx.serialization, Navigation Compose, Room/SQLDelight</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section>
+            <div class="section-label">PROJECTS</div>
+
+            <div class="project-card fade-in">
+                <h3>Meridian</h3>
+                <div class="project-meta">Kotlin Multiplatform &middot; Compose Multiplatform &middot; Android, iOS, Desktop</div>
+                <p>
+                    A comprehensive life tracking app built with KMP and Compose Multiplatform. Features goal tracking across career, finance, and personal domains, daily schedule management with spaced repetition system, DSA problem tracker, job hunt pipeline, and expense monitoring. Runs natively on Android, iOS, and macOS Desktop from a single codebase.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Kotlin</span>
+                    <span class="tech-tag">Compose Multiplatform</span>
+                    <span class="tech-tag">KMP</span>
+                    <span class="tech-tag">Navigation</span>
+                    <span class="tech-tag">kotlinx.serialization</span>
+                    <span class="tech-tag">MVVM</span>
+                    <span class="tech-tag">StateFlow</span>
+                </div>
+            </div>
+
+            <div class="project-card fade-in delay-1">
+                <h3>Coming Soon — KMP Utility Library</h3>
+                <div class="project-meta">Open Source &middot; Kotlin Multiplatform</div>
+                <p>
+                    A multiplatform utility library for common KMP patterns. Shared preferences, platform abstractions, and Compose helpers. Designed for the KMP ecosystem.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Kotlin</span>
+                    <span class="tech-tag">KMP</span>
+                    <span class="tech-tag">Maven Central</span>
+                </div>
+            </div>
+
+            <div class="project-card fade-in delay-2">
+                <h3>Coming Soon — Crypto Price Tracker</h3>
+                <div class="project-meta">KMP &middot; Ktor &middot; Compose Multiplatform</div>
+                <p>
+                    Real-time crypto price tracker with charts, offline caching, and portfolio tracking. Built with Ktor for networking, SQLDelight for persistence, and Compose Multiplatform for UI.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Kotlin</span>
+                    <span class="tech-tag">Ktor</span>
+                    <span class="tech-tag">SQLDelight</span>
+                    <span class="tech-tag">Compose</span>
+                    <span class="tech-tag">CoinGecko API</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section>
+            <div class="section-label">EXPERIENCE</div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span class="exp-role">Android Developer</span>
+                    <span class="exp-date">2024 — 2026</span>
+                </div>
+                <div class="exp-company">Previous Company</div>
+                <ul class="exp-desc">
+                    <li>Built and maintained Android applications using Kotlin and Jetpack Compose</li>
+                    <li>Implemented clean architecture patterns with MVVM, Repository pattern, and Coroutines</li>
+                    <li>Collaborated with cross-functional teams on feature development and code reviews</li>
+                    <li>Worked with REST APIs, local data persistence, and reactive data flows</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- What I'm Learning -->
+        <section>
+            <div class="section-label">CURRENTLY LEARNING</div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3><span class="accent" style="background: #CC4E4E"></span> DSA</h3>
+                    <p>Neetcode 250 — building pattern mastery with spaced repetition. Arrays through Trees complete, advancing to Graphs & DP.</p>
+                </div>
+                <div class="skill-card">
+                    <h3><span class="accent" style="background: var(--career)"></span> System Design</h3>
+                    <p>Mobile System Design (Manuel Vivo). Practicing: feed systems, messaging, payment flows, offline-first architecture.</p>
+                </div>
+                <div class="skill-card">
+                    <h3><span class="accent" style="background: #2E9688"></span> LLD & Design Patterns</h3>
+                    <p>Head First Design Patterns + Kotlin-specific patterns. Practicing with real coding problems.</p>
+                </div>
+                <div class="skill-card">
+                    <h3><span class="accent" style="background: var(--primary)"></span> KMP Deep-dive</h3>
+                    <p>Kotlin Multiplatform architecture, expect/actual, Ktor networking, shared data layers, Compose Multiplatform.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section>
+            <div class="section-label">GET IN TOUCH</div>
+            <p style="font-size: 16px; color: var(--dim); margin-bottom: 24px; font-weight: 300;">
+                Open to full-time remote Android & KMP engineering roles. Available immediately.
+            </p>
+            <div class="contact-grid">
+                <a href="mailto:YOUR_EMAIL" class="contact-card">
+                    <div class="contact-label">EMAIL</div>
+                    <div class="contact-value">your@email.com</div>
+                </a>
+                <a href="https://linkedin.com/in/YOUR_LINKEDIN" class="contact-card" target="_blank">
+                    <div class="contact-label">LINKEDIN</div>
+                    <div class="contact-value">vishesh-tiwari</div>
+                </a>
+                <a href="https://github.com/visheshtiwari211" class="contact-card" target="_blank">
+                    <div class="contact-label">GITHUB</div>
+                    <div class="contact-value">@visheshtiwari211</div>
+                </a>
+                <a href="https://arc.dev/@YOUR_ARC" class="contact-card" target="_blank">
+                    <div class="contact-label">ARC.DEV</div>
+                    <div class="contact-value">Profile</div>
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <p>Built with intention. &copy; 2026 Vishesh Tiwari</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('light');
+            const isLight = document.body.classList.contains('light');
+            document.getElementById('themeIcon').innerHTML = isLight ? '&#9728;' : '&#9790;';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        }
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light');
+            document.getElementById('themeIcon').innerHTML = '&#9728;';
+        }
+
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
